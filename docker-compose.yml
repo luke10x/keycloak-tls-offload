@@ -1,0 +1,31 @@
+version: '3.2'
+
+services:
+  lb:
+    build:
+      context: ./lb
+      dockerfile: Dockerfile
+    networks:
+      testnet:
+        aliases:
+          - google.com
+          - www.google.com
+
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      KEYCLOAK_USER: guardian 
+      KEYCLOAK_PASSWORD: mutabor 
+      DB_VENDOR: h2 
+      #KEYCLOAK_IMPORT: /tmp/import-realm.json
+    #volumes:
+      #- ./data/realm.json:/tmp/import-realm.json
+    networks: [ 'testnet' ]
+
+  socks:
+    image: serjs/go-socks5-proxy
+    ports: [ '8910:1080' ]
+    networks: [ 'testnet' ]
+
+networks:
+  testnet:
