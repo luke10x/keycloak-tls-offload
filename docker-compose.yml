@@ -17,9 +17,9 @@ services:
       KEYCLOAK_USER: guardian 
       KEYCLOAK_PASSWORD: mutabor 
       DB_VENDOR: h2 
-      #KEYCLOAK_IMPORT: /tmp/import-realm.json
-    #volumes:
-      #- ./data/realm.json:/tmp/import-realm.json
+      PROXY_ADDRESS_FORWARDING: "true"
+    volumes:
+      - ./kc/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
     networks: [ 'testnet' ]
 
   socks:
